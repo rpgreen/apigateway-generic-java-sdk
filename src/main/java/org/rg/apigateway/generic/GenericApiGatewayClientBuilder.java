@@ -2,7 +2,9 @@ package org.rg.apigateway.generic;
 
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.http.AmazonHttpClient;
 import com.amazonaws.regions.Region;
+import org.rg.apigateway.util.Validate;
 
 public class GenericApiGatewayClientBuilder {
     private String endpoint;
@@ -10,18 +12,11 @@ public class GenericApiGatewayClientBuilder {
     private AWSCredentialsProvider credentials;
     private ClientConfiguration clientConfiguration;
     private String apiKey;
-
-    public String getEndpoint() {
-        return endpoint;
-    }
+    private AmazonHttpClient client;
 
     public GenericApiGatewayClientBuilder withEndpoint(String endpoint) {
         this.endpoint = endpoint;
         return this;
-    }
-
-    public Region getRegion() {
-        return region;
     }
 
     public GenericApiGatewayClientBuilder withRegion(Region region) {
@@ -29,17 +24,9 @@ public class GenericApiGatewayClientBuilder {
         return this;
     }
 
-    public ClientConfiguration getClientConfiguration() {
-        return clientConfiguration;
-    }
-
     public GenericApiGatewayClientBuilder withClientConfiguration(ClientConfiguration clientConfiguration) {
         this.clientConfiguration = clientConfiguration;
         return this;
-    }
-
-    public AWSCredentialsProvider getCredentials() {
-        return credentials;
     }
 
     public GenericApiGatewayClientBuilder withCredentials(AWSCredentialsProvider credentials) {
@@ -52,10 +39,39 @@ public class GenericApiGatewayClientBuilder {
         return this;
     }
 
+    public GenericApiGatewayClientBuilder withClient(AmazonHttpClient client) {
+        this.client = client;
+        return this;
+    }
+
+    public AWSCredentialsProvider getCredentials() {
+        return credentials;
+    }
+
+    public String getApiKey() {
+        return apiKey;
+    }
+
+    public AmazonHttpClient getClient() {
+        return client;
+    }
+
+    public String getEndpoint() {
+        return endpoint;
+    }
+
+    public Region getRegion() {
+        return region;
+    }
+
+    public ClientConfiguration getClientConfiguration() {
+        return clientConfiguration;
+    }
+
     public GenericApiGatewayClient build() {
-//            assertNotEmpty(endpoint, "Endpoint cannot be null");
-//            assertNotEmpty(region, "Region cannot be null");
-        return new GenericApiGatewayClient(clientConfiguration, endpoint, region, credentials, apiKey);
+        Validate.notEmpty(endpoint, "Endpoint");
+        Validate.notNull(region, "Region");
+        return new GenericApiGatewayClient(clientConfiguration, endpoint, region, credentials, apiKey, client);
     }
 
 }

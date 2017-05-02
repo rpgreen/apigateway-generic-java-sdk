@@ -1,6 +1,7 @@
 package org.rg.apigateway.generic;
 
 import com.amazonaws.http.HttpMethodName;
+import org.rg.apigateway.util.Validate;
 
 import java.io.InputStream;
 import java.util.Map;
@@ -32,8 +33,8 @@ public class GenericApiGatewayRequestBuilder {
     }
 
     public GenericApiGatewayRequest build() {
-//        Validate.notNull(httpMethod, "HTTP Method cannot be null");
-//        Validate.notNull(resourcePath, "Resource path cannot be null");
+        Validate.notNull(httpMethod, "HTTP method");
+        Validate.notEmpty(resourcePath, "Resource path");
         return new GenericApiGatewayRequest(httpMethod, resourcePath, body, headers);
     }
 }

@@ -6,6 +6,7 @@ import com.amazonaws.ClientConfiguration;
 import com.amazonaws.DefaultRequest;
 import com.amazonaws.auth.AWS4Signer;
 import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.http.AmazonHttpClient;
 import com.amazonaws.http.ExecutionContext;
 import com.amazonaws.http.HttpMethodName;
 import com.amazonaws.http.HttpResponseHandler;
@@ -34,7 +35,7 @@ public class GenericApiGatewayClient extends AmazonWebServiceClient {
     private String apiKey;
 
     GenericApiGatewayClient(ClientConfiguration clientConfiguration, String endpoint, Region region,
-                                   AWSCredentialsProvider credentials, String apiKey) {
+                            AWSCredentialsProvider credentials, String apiKey, AmazonHttpClient client) {
         super(clientConfiguration);
         this.apiKey = apiKey;
         setRegion(region);
@@ -59,6 +60,10 @@ public class GenericApiGatewayClient extends AmazonWebServiceClient {
             }
         };
         errorResponseHandler = SdkStructuredPlainJsonFactory.SDK_JSON_FACTORY.createErrorResponseHandler(Collections.singletonList(defaultErrorUnmarshaller), null);
+
+        if (client != null) {
+            this.client = client;
+        }
     }
 
     public GenericApiGatewayResponse execute(GenericApiGatewayRequest request) {
