@@ -11,15 +11,8 @@
 
     <dependency>
       <groupId>com.amazonaws</groupId>
-      <artifactId>aws-java-sdk</artifactId>
+      <artifactId>aws-java-sdk-core</artifactId>
       <version>1.11.106</version>
-    </dependency>
-
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.12</version>
-      <scope>test</scope>
     </dependency>
 
     <dependency>

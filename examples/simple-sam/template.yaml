@@ -1,0 +1,52 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  SdkExampleFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: SdkExample
+      Timeout: 30
+      Handler: org.rg.examples.Main::handleRequest
+      Runtime: java8
+      CodeUri: target/apigateway-generic-java-sdk-example-1.0-SNAPSHOT.jar
+      Policies:
+       - AWSLambdaExecute
+       - Version: '2012-10-17' # Policy Document
+         Statement:
+           - Effect: Allow
+             Action:
+               - execute-api:Invoke
+             Resource: !Join ['/', [!Join [":", ['arn:aws:execute-api:us-west-2:*:', !Ref ExampleApi]], '*']]
+      Events:
+        GetResource:
+          Type: Api
+          Properties:
+            Path: /sdk-example/{proxy+}
+            Method: any
+  HelloFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: SdkExampleHelloIAM
+      Timeout: 30
+      Handler: org.rg.examples.Main::hello
+      Runtime: java8
+      CodeUri: target/apigateway-generic-java-sdk-example-1.0-SNAPSHOT.jar
+      Policies:
+        - AWSLambdaExecute
+      Events:
+        GetResource:
+          Type: Api
+          Properties:
+            Path: /hello
+            Method: get
+  ExampleApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      DefinitionUri: swagger.yaml
+Outputs:
+  SdkExampleApi:
+    Description: API URI
+    Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/sdk-example'
+    Export:
+      Name: SdkExampleApi
