@@ -16,7 +16,7 @@ Resources:
            - Effect: Allow
              Action:
                - execute-api:Invoke
-             Resource: !Join ['/', [!Join [":", ['arn:aws:execute-api:us-west-2:*:', !Ref ExampleApi]], '*']]
+             Resource: !Join ['/', [!Join [":", ['arn:aws:execute-api:us-west-2:*', !Ref ExampleApi]], 'Prod', '*']]
       Events:
         GetResource:
           Type: Api
