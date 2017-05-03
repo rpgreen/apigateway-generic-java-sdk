@@ -26,13 +26,20 @@ GenericApiGatewayClient client = new GenericApiGatewayClientBuilder()
 Map<String, String> headers = new HashMap<>();
 headers.put("Content-Type", "application/json");
 
-GenericApiGatewayResponse response = client.execute(  // throws exception for non-2xx response
-        new GenericApiGatewayRequestBuilder()
-                .withBody(new ByteArrayInputStream("foo".getBytes()))
-                .withHttpMethod(HttpMethodName.POST)
-                .withHeaders(headers)
-                .withResourcePath("/stage/path").build());
-System.out.println("Response: " + response.getBody());
-System.out.println("Status: " + response.getHttpResponse.getStatusCode());
+try {
+    GenericApiGatewayResponse response = client.execute(
+            new GenericApiGatewayRequestBuilder()
+                    .withBody(new ByteArrayInputStream("foo".getBytes()))
+                    .withHttpMethod(HttpMethodName.POST)
+                    .withHeaders(headers)
+                    .withResourcePath("/stage/path").build());
+    
+    System.out.println("Response: " + response.getBody());
+    System.out.println("Status: " + response.getHttpResponse.getStatusCode());
+    
+} catch (GenericApiGatewayException e) {   // exception thrown for any non-2xx response
+    System.out.println(String.format("Client threw exception with message %s and status code %s", 
+            e.getMessage(), e.getStatusCode()));
+}
 
 ```
