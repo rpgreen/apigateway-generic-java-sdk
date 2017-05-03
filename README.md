@@ -6,10 +6,12 @@ It is optimized to run from a Lambda function and does not require extra depende
 It does not make any assumptions about the wire format of your requests and responses. You are free to parse response bodies as you see fit, and the raw HTTP response data is included in the wrapped response.
 
 ## Features
-* AWS SigV4 request signing. Supports APIs authenticated with IAM auth using standard AWSCredentialsProvider interface.
+* AWS SigV4 request signing. Supports APIs authenticated with IAM auth using standard AWSCredentialsProvider interface
 * API Keys
 * Custom headers 
 * Throws exceptions for non-2xx response codes
+* Compatibility with existing AWS SDK client configuration (connections, retry policies, etc)
+* Runs in AWS Lambda functions with no additional dependencies
 
 ## Examples
 ```java
@@ -34,9 +36,3 @@ System.out.println("Response: " + response.getBody());
 System.out.println("Status: " + response.getHttpResponse.getStatusCode());
 
 ```
-
-## TODO
-
-* Unit tests
-* SAM example
-* Better validation
