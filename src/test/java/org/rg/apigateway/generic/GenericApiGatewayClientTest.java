@@ -53,7 +53,7 @@ public class GenericApiGatewayClientTest {
                 .withEndpoint("https://foobar.execute-api.us-east-1.amazonaws.com")
                 .withRegion(Region.getRegion(Regions.fromName("us-east-1")))
                 .withApiKey("12345")
-                .withClient(new AmazonHttpClient(clientConfig, mockClient, null))
+                .withHttpClient(new AmazonHttpClient(clientConfig, mockClient, null))
                 .build();
     }
 
@@ -77,6 +77,32 @@ public class GenericApiGatewayClientTest {
                                 && x.getFirstHeader("Account-Id").getValue().equals("fubar")
                                 && x.getFirstHeader("x-api-key").getValue().equals("12345")
                                 && x.getFirstHeader("Authorization").getValue().startsWith("AWS4")
+                                && x.getURI().toString().equals("https://foobar.execute-api.us-east-1.amazonaws.com/test/orders")))),
+                any(HttpContext.class));
+    }
+
+    @Test
+    public void testExecute_noApiKey_noCreds() throws IOException {
+        client = new GenericApiGatewayClientBuilder()
+                .withEndpoint("https://foobar.execute-api.us-east-1.amazonaws.com")
+                .withRegion(Region.getRegion(Regions.fromName("us-east-1")))
+                .withClientConfiguration(new ClientConfiguration())
+                .withHttpClient(new AmazonHttpClient(new ClientConfiguration(), mockClient, null))
+                .build();
+
+        GenericApiGatewayResponse response = client.execute(
+                new GenericApiGatewayRequestBuilder()
+                        .withBody(new ByteArrayInputStream("test request".getBytes()))
+                        .withHttpMethod(HttpMethodName.POST)
+                        .withResourcePath("/test/orders").build());
+
+        assertEquals("Wrong response body", "test payload", response.getBody());
+        assertEquals("Wrong response status", 200, response.getHttpResponse().getStatusCode());
+
+        Mockito.verify(mockClient, times(1)).execute(argThat(new LambdaMatcher<>(
+                        x -> (x.getMethod().equals("POST")
+                                && x.getFirstHeader("x-api-key") == null
+                                && x.getFirstHeader("Authorization") == null
                                 && x.getURI().toString().equals("https://foobar.execute-api.us-east-1.amazonaws.com/test/orders")))),
                 any(HttpContext.class));
     }

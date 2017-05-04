@@ -7,14 +7,9 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 public class GenericApiGatewayClientBuilderTest {
-    @Before
-    public void setUp() throws Exception {
-    }
-
     @Test
     public void testBuild_happy() throws Exception {
         AWSCredentialsProvider credentials = new AWSStaticCredentialsProvider(new BasicAWSCredentials("foo", "bar"));

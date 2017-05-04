@@ -12,7 +12,7 @@ public class GenericApiGatewayClientBuilder {
     private AWSCredentialsProvider credentials;
     private ClientConfiguration clientConfiguration;
     private String apiKey;
-    private AmazonHttpClient client;
+    private AmazonHttpClient httpClient;
 
     public GenericApiGatewayClientBuilder withEndpoint(String endpoint) {
         this.endpoint = endpoint;
@@ -39,8 +39,8 @@ public class GenericApiGatewayClientBuilder {
         return this;
     }
 
-    public GenericApiGatewayClientBuilder withClient(AmazonHttpClient client) {
-        this.client = client;
+    public GenericApiGatewayClientBuilder withHttpClient(AmazonHttpClient client) {
+        this.httpClient = client;
         return this;
     }
 
@@ -52,8 +52,8 @@ public class GenericApiGatewayClientBuilder {
         return apiKey;
     }
 
-    public AmazonHttpClient getClient() {
-        return client;
+    public AmazonHttpClient getHttpClient() {
+        return httpClient;
     }
 
     public String getEndpoint() {
@@ -71,7 +71,7 @@ public class GenericApiGatewayClientBuilder {
     public GenericApiGatewayClient build() {
         Validate.notEmpty(endpoint, "Endpoint");
         Validate.notNull(region, "Region");
-        return new GenericApiGatewayClient(clientConfiguration, endpoint, region, credentials, apiKey, client);
+        return new GenericApiGatewayClient(clientConfiguration, endpoint, region, credentials, apiKey, httpClient);
     }
 
 }
