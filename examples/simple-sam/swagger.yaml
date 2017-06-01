@@ -14,7 +14,7 @@ paths:
         responses:
           default:
             statusCode: 200
-        uri: arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:975344022805:function:SdkExample/invocations
+        uri: arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:[AWS_ACCOUNT_ID]:function:SdkExample/invocations
         httpMethod: POST
         type: aws_proxy
   /hello:
@@ -24,6 +24,6 @@ paths:
       produces:
       - application/json
       x-amazon-apigateway-integration:
-        uri: arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:975344022805:function:SdkExampleHelloIAM/invocations
+        uri: arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:[AWS_ACCOUNT_ID]:function:SdkExampleHelloIAM/invocations
         httpMethod: POST
         type: aws_proxy
