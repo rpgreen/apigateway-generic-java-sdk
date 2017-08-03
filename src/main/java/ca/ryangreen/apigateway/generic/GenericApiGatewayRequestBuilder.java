@@ -1,7 +1,7 @@
-package org.rg.apigateway.generic;
+package ca.ryangreen.apigateway.generic;
 
 import com.amazonaws.http.HttpMethodName;
-import org.rg.apigateway.util.Validate;
+import ca.ryangreen.apigateway.util.Validate;
 
 import java.io.InputStream;
 import java.util.Map;

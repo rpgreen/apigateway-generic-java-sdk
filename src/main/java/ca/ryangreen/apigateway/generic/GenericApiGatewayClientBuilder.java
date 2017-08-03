@@ -1,10 +1,10 @@
-package org.rg.apigateway.generic;
+package ca.ryangreen.apigateway.generic;
 
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.http.AmazonHttpClient;
 import com.amazonaws.regions.Region;
-import org.rg.apigateway.util.Validate;
+import ca.ryangreen.apigateway.util.Validate;
 
 public class GenericApiGatewayClientBuilder {
     private String endpoint;

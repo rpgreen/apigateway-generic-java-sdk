@@ -1,4 +1,4 @@
-package org.rg.examples;
+package ca.ryangreen.examples;
 
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.EnvironmentVariableCredentialsProvider;
@@ -9,11 +9,11 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.rg.apigateway.generic.GenericApiGatewayClient;
-import org.rg.apigateway.generic.GenericApiGatewayClientBuilder;
-import org.rg.apigateway.generic.GenericApiGatewayException;
-import org.rg.apigateway.generic.GenericApiGatewayRequestBuilder;
-import org.rg.apigateway.generic.GenericApiGatewayResponse;
+import ca.ryangreen.apigateway.generic.GenericApiGatewayClient;
+import ca.ryangreen.apigateway.generic.GenericApiGatewayClientBuilder;
+import ca.ryangreen.apigateway.generic.GenericApiGatewayException;
+import ca.ryangreen.apigateway.generic.GenericApiGatewayRequestBuilder;
+import ca.ryangreen.apigateway.generic.GenericApiGatewayResponse;
 
 import java.io.IOException;
 import java.io.InputStream;

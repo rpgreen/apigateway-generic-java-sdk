@@ -6,7 +6,7 @@ Resources:
     Properties:
       FunctionName: SdkExample
       Timeout: 30
-      Handler: org.rg.examples.Main::handleRequest
+      Handler: ca.ryangreen.examples.Main::handleRequest
       Runtime: java8
       CodeUri: target/apigateway-generic-java-sdk-example-1.0-SNAPSHOT.jar
       Policies:
@@ -28,7 +28,7 @@ Resources:
     Properties:
       FunctionName: SdkExampleHelloIAM
       Timeout: 30
-      Handler: org.rg.examples.Main::hello
+      Handler: ca.ryangreen.examples.Main::hello
       Runtime: java8
       CodeUri: target/apigateway-generic-java-sdk-example-1.0-SNAPSHOT.jar
       Policies:

@@ -1,4 +1,4 @@
-package org.rg.apigateway.generic;
+package ca.ryangreen.apigateway.generic;
 
 import com.amazonaws.AmazonServiceException;
 

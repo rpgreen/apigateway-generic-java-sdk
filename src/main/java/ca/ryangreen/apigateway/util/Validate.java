@@ -1,4 +1,4 @@
-package org.rg.apigateway.util;
+package ca.ryangreen.apigateway.util;
 
 import com.amazonaws.util.StringUtils;
 
