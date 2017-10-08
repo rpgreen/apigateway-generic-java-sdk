@@ -29,8 +29,6 @@ public class Main implements RequestStreamHandler {
     // this function is exposed by /hello and is authenticated with IAM
     public void hello(InputStream inputStream, OutputStream outputStream, Context context) throws IOException {
         ProxyResponse resp = new ProxyResponse("200", "{\"message\" : \"Hello World\"}");
-        String apiIntputStream = new Scanner(inputStream).useDelimiter("\\A").next();
-        System.out.println("Response: " + apiIntputStream);
 
         String responseString = new ObjectMapper(new JsonFactory()).writeValueAsString(resp);
 
@@ -41,20 +39,10 @@ public class Main implements RequestStreamHandler {
 
     // this function is exposed by /sdk-example and is unauthenticated
     public void handleRequest(InputStream inputStream, OutputStream outputStream, Context context) throws IOException {
-
         String apiIntputStream = new Scanner(inputStream).useDelimiter("\\A").next();
-        JsonFactory factory = new JsonFactory();
-        ObjectMapper mapper = new ObjectMapper(factory);
-        JsonNode rootNode = mapper.readTree(apiIntputStream);
+        JsonNode rootNode = (new ObjectMapper(new JsonFactory())).readTree(apiIntputStream);
         String myApiId = rootNode.path("requestContext").path("apiId").asText();
-
-        // just for fun, output all details to logs
-        System.out.println("Response: " + apiIntputStream);
-        Iterator<Map.Entry<String,JsonNode>> nodes = rootNode.get("requestContext").fields();
-        while (nodes.hasNext()) {
-              Map.Entry<String,JsonNode> field = nodes.next();
-              System.out.println("Key: " + field.getKey() + "\tValue:" + field.getValue());
-        }
+        if (myApiId.isEmpty()) { myApiId = "TODO"; } // Not called from API Gateway
 
         final GenericApiGatewayClient client = new GenericApiGatewayClientBuilder()
                 .withClientConfiguration(new ClientConfiguration())
