@@ -8,6 +8,7 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
 import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ca.ryangreen.apigateway.generic.GenericApiGatewayClient;
 import ca.ryangreen.apigateway.generic.GenericApiGatewayClientBuilder;
@@ -19,6 +20,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.util.Scanner;
+import java.util.Iterator;
+import java.util.Map;
 
 public class Main implements RequestStreamHandler {
 
@@ -35,11 +39,15 @@ public class Main implements RequestStreamHandler {
 
     // this function is exposed by /sdk-example and is unauthenticated
     public void handleRequest(InputStream inputStream, OutputStream outputStream, Context context) throws IOException {
+        String apiIntputStream = new Scanner(inputStream).useDelimiter("\\A").next();
+        JsonNode rootNode = (new ObjectMapper(new JsonFactory())).readTree(apiIntputStream);
+        String myApiId = rootNode.path("requestContext").path("apiId").asText();
+        if (myApiId.isEmpty()) { myApiId = "TODO"; } // Not called from API Gateway
 
         final GenericApiGatewayClient client = new GenericApiGatewayClientBuilder()
                 .withClientConfiguration(new ClientConfiguration())
                 .withCredentials(new EnvironmentVariableCredentialsProvider())
-                .withEndpoint("https://0g7n3beoyi.execute-api.us-west-2.amazonaws.com") // replace with your API ID
+                .withEndpoint("https://" + myApiId + ".execute-api.us-west-2.amazonaws.com") // your API ID
                 .withRegion(Region.getRegion(Regions.fromName("us-west-2")))
                 .build();
 
