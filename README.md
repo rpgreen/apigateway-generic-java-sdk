@@ -13,6 +13,26 @@ It does not make any assumptions about the wire format of your requests and resp
 * Compatibility with existing AWS SDK client configuration (connections, retry policies, etc)
 * Runs in AWS Lambda functions with no additional dependencies
 
+## Install
+
+### Maven
+```
+<dependency>
+  <groupId>ca.ryangreen</groupId>
+  <artifactId>apigateway-generic-java-sdk</artifactId>
+  <version>1.0</version>
+</dependency>
+```
+
+### From source
+```bash
+git clone https://github.com/rpgreen/apigateway-generic-java-sdk.git
+
+# Optional:
+cd apigateway-generic-java-sdk
+mvn install
+```
+
 ## Examples
 ```java
 GenericApiGatewayClient client = new GenericApiGatewayClientBuilder()
