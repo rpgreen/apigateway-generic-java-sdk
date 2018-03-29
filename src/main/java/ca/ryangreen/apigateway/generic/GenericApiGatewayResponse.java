@@ -11,7 +11,11 @@ public class GenericApiGatewayResponse {
 
     public GenericApiGatewayResponse(HttpResponse httpResponse) throws IOException {
         this.httpResponse = httpResponse;
-        this.body = IOUtils.toString(httpResponse.getContent());
+        if (httpResponse.getContent()!= null) {
+            this.body = IOUtils.toString(httpResponse.getContent());
+        } else {
+            this.body = null;
+        }
     }
 
     public HttpResponse getHttpResponse() {
