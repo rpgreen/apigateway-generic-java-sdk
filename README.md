@@ -1,5 +1,8 @@
 # apigateway-generic-java-sdk
-This is a simple generic Java client for Amazon API Gateway endpoints. It is useful when you don't necessarily want to generate a [strongly typed SDK](https://aws.amazon.com/blogs/developer/api-gateway-java-sdk), such as when prototyping or scripting.
+
+[![CircleCI](https://circleci.com/gh/rpgreen/apigateway-generic-java-sdk.svg?style=svg)](https://circleci.com/gh/rpgreen/apigateway-generic-java-sdk)
+
+This is a simple generic Java client for Amazon API Gateway endpoints. It is useful when you don't necessarily want to generate a [strongly-typed SDK](https://aws.amazon.com/blogs/developer/api-gateway-java-sdk), such as when prototyping or scripting.
 
 It is optimized to run from a Lambda function and does not require extra dependencies beyond the AWS SDK, which is already bundled in the Lambda runtime.
 
