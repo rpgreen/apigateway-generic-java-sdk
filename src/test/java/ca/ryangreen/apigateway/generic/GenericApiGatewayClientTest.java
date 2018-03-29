@@ -9,6 +9,8 @@ import com.amazonaws.http.HttpMethodName;
 import com.amazonaws.http.apache.client.impl.SdkHttpClient;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
+import java.util.Arrays;
+import java.util.List;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -79,6 +81,33 @@ public class GenericApiGatewayClientTest {
                                 && x.getFirstHeader("Authorization").getValue().startsWith("AWS4")
                                 && x.getURI().toString().equals("https://foobar.execute-api.us-east-1.amazonaws.com/test/orders")))),
                 any(HttpContext.class));
+    }
+
+    @Test
+    public void testExecute_happy_parameters() throws IOException {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Account-Id", "fubar");
+        headers.put("Content-Type", "application/json");
+        Map<String,List<String>> parameters = new HashMap<>();
+        parameters.put("MyParam", Arrays.asList("MyParamValue"));
+        GenericApiGatewayResponse response = client.execute(
+            new GenericApiGatewayRequestBuilder()
+                .withBody(new ByteArrayInputStream("test request".getBytes()))
+                .withHttpMethod(HttpMethodName.POST)
+                .withHeaders(headers)
+                .withParameters(parameters)
+                .withResourcePath("/test/orders").build());
+
+        assertEquals("Wrong response body", "test payload", response.getBody());
+        assertEquals("Wrong response status", 200, response.getHttpResponse().getStatusCode());
+
+        Mockito.verify(mockClient, times(1)).execute(argThat(new LambdaMatcher<>(
+                                                         x -> (x.getMethod().equals("POST")
+                                                             && x.getFirstHeader("Account-Id").getValue().equals("fubar")
+                                                             && x.getFirstHeader("x-api-key").getValue().equals("12345")
+                                                             && x.getFirstHeader("Authorization").getValue().startsWith("AWS4")
+                                                             && x.getURI().toString().equals("https://foobar.execute-api.us-east-1.amazonaws.com/test/orders?MyParam=MyParamValue")))),
+                                                     any(HttpContext.class));
     }
 
     @Test
