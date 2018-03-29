@@ -39,10 +39,6 @@ public class GenericApiGatewayRequestBuilder {
         return this;
     }
 
-    public boolean hasBody() {
-        return this.body != null;
-    }
-
     public GenericApiGatewayRequest build() {
         Validate.notNull(httpMethod, "HTTP method");
         Validate.notEmpty(resourcePath, "Resource path");
