@@ -23,7 +23,7 @@ It does not make any assumptions about the wire format of your requests and resp
 <dependency>
   <groupId>ca.ryangreen</groupId>
   <artifactId>apigateway-generic-java-sdk</artifactId>
-  <version>1.0</version>
+  <version>1.3</version>
 </dependency>
 ```
 
