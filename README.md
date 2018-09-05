@@ -58,7 +58,7 @@ try {
                     .withResourcePath("/stage/path").build());
     
     System.out.println("Response: " + response.getBody());
-    System.out.println("Status: " + response.getHttpResponse.getStatusCode());
+    System.out.println("Status: " + response.getHttpResponse().getStatusCode());
     
 } catch (GenericApiGatewayException e) {   // exception thrown for any non-2xx response
     System.out.println(String.format("Client threw exception with message %s and status code %s", 
